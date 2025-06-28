@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartita Especial</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #7b3f45; /* Burdeo suave */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .circle-button {
+      width: 200px;
+      height: 200px;
+      background-color: #f5deb3; /* Beige amarillento */
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 18px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .message {
+      display: none;
+      background: #fff8dc;
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid #d2b48c;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 3;
+      animation: scrollReveal 1s ease-out;
+    }
+
+    @keyframes scrollReveal {
+      0% { transform: scaleY(0); opacity: 0; }
+      100% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      transform: rotate(45deg);
+      animation: floatUp 3s ease-out forwards;
+      opacity: 0.7;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: -10px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-600px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    .flash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: white;
+      opacity: 0;
+      z-index: 1000;
+      animation: flash 0.3s ease-out;
+    }
+
+    @keyframes flash {
+      0% { opacity: 0.8; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="circle-button" id="circle" onclick="nextStep()">
+      <span id="circle-text">Toque aquí para ver el mensajito</span>
+    </div>
+    <div class="message" id="message">
+      En este preciso momento podría decirle que siento muchas cosas, no pensaba ni se me pasaba por la cabeza que el día lunes 23 de Junio sería un día en que empezarían a cambiar las cosas nuevamente en mi vida y que sería usted quien forme parte de ese cambio, y un cambio bueno siéndole sincero. Hay algo que quiero contarle y es que hubieron muchos días en donde justo veía la hora y daba justo que eran las 11:11. En ese momento lo único que pensaba era en manifestar que pronto pudiéramos reencontrarnos hasta que ahora está pasando, y por esa razón hay veces que no me creo que esté ocurriendo. Hoy puedo decirle que me siento muy agradecido de tener de nuevo una oportunidad de poder amarla y decirle de frente lo mucho que la amo, aunque nunca la he dejado de amar. Quiero que sepa que su presencia es muy gratificante y a la vez hace sentir mi corazón muy en paz después de todo el tiempo que ha pasado. Al volverla a ver y cada vez que la veo sentiré esos nervios como si fuese siempre la primera vez y creo que siempre sentiré esa sensación. Esta cartita virtual va con mucho amor y un poco a mi estilo ya que ahorita no se la puedo hacer llegar físicamente jsjs.
+La amo mucho ❤
+    </div>
+  </div>
+
+  <script>
+    let step = 0;
+
+    function nextStep() {
+      const circle = document.getElementById('circle');
+      const text = document.getElementById('circle-text');
+      const message = document.getElementById('message');
+
+      if (step === 0) {
+        text.style.opacity = 0;
+        setTimeout(() => {
+          text.innerHTML = '¿Lista para verlo?<br><small>Vuelva a tocar aquí</small>';
+          text.style.opacity = 1;
+        }, 300);
+        step++;
+      } else if (step === 1) {
+        circle.style.display = 'none';
+        showFlash();
+        createHearts(30);
+        message.style.display = 'block';
+        step++;
+      }
+    }
+
+    function createHearts(count) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.bottom = '0px';
+        heart.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 80%)`;
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 3000);
+      }
+    }
+
+    function showFlash() {
+      const flash = document.createElement('div');
+      flash.className = 'flash';
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 300);
+    }
+  </script>
+</body>
+</html>
